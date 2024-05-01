@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<invoices>
+    <invoice>
+        <id>invoice-2019-07-01</id>
+        <issued>2019-07-01</issued>
+        <description>Фактура за месец юли</description>
+    </invoice>
+    <invoice>
+        <id>invoice-2019-06-01</id>
+        <issued>2019-06-01</issued>
+        <description>Невалидна фактура. Ако се опитате да я отворите ще получите съобщение за грешка.</description>
+    </invoice>
+</invoices>

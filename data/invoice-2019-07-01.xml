@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<invoice xmlns="http://xmlcourse.free.bg/2019/invoice">
+    <details>
+        <number>123</number>
+        <issued>2019-07-01</issued>
+        <payment_due>2019-07-01</payment_due>
+        <from>
+            <id>123456786</id>
+            <vat_id>BG123456786</vat_id>
+            <name>Акме облачни услуги</name>
+            <address>бул. "Ломско Шосе" 100</address>
+            <city>София</city>
+            <country>България</country>
+        </from>
+        <for>
+            <id>8605049740</id>
+            <name>Иван Иванов</name>
+            <address>ул. "Цар Симеон" 30</address>
+            <city>София</city>
+            <country>България</country>
+        </for>
+        <currency>лв</currency>
+    </details>
+
+    <summary>
+        <subtotal>103.84</subtotal>
+        <taxes>
+            <tax>
+                <name>ДДС</name>
+                <rate>20</rate>
+                <amount>20.77</amount>
+            </tax>
+        </taxes>
+        <total>124.61</total>
+    </summary>
+
+    <charges>
+        <services>
+            <service>
+                <name>Инфраструктура</name>
+                <subtotal>17.44</subtotal>
+                <items>
+                    <item>
+                        <description>2 vCPU 4 GB RAM</description>
+                        <unit>часове</unit>
+                        <unit_price>0.01</unit_price>
+                        <usage>720</usage>
+                        <amount>7.20</amount>
+                    </item>
+                    <item>
+                        <description>SSD</description>
+                        <unit>ГБ</unit>
+                        <unit_price>0.02</unit_price>
+                        <usage>512</usage>
+                        <amount>10.24</amount>
+                    </item>
+                </items>
+            </service>
+            <service>
+                <name>База данни</name>
+                <subtotal>86.40</subtotal>
+                <items>
+                    <item>
+                        <description>4 vCPU 8 GB RAM 1TB HDD</description>
+                        <unit>часове</unit>
+                        <unit_price>0.12</unit_price>
+                        <usage>720</usage>
+                        <amount>86.40</amount>
+                    </item>
+                </items>
+            </service>
+        </services>
+    </charges>
+</invoice>

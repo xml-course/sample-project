@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://xmlcourse.free.bg/2019/invoice"
+           elementFormDefault="qualified"
+           targetNamespace="http://xmlcourse.free.bg/2019/invoice">
+
+    <xs:element name="invoice" type="tns:Invoice" />
+
+    <xs:complexType name="Invoice">
+        <xs:all>
+            <xs:element type="tns:Details" name="details">
+                <xs:annotation>
+                    <xs:documentation>
+                        Информация за фактурата.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="tns:Summary" name="summary">
+                <xs:annotation>
+                    <xs:documentation>
+                        Обобщение на потреблението.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="tns:Charges" name="charges" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Подробно описание на потреблението.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="Details">
+        <xs:annotation>
+            <xs:documentation>
+                Информация за фактурата - номер, издател, получател,
+                дата на издаване, дата на данъчното събитие
+                и използваната валута.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:all>
+            <xs:element type="xs:positiveInteger" name="number">
+                <xs:annotation>
+                    <xs:documentation>
+                        Номер на документа.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:date" name="issued">
+                <xs:annotation>
+                    <xs:documentation>
+                        Дата на издаване.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:date" name="payment_due">
+                <xs:annotation>
+                    <xs:documentation>
+                        Дата на възникване на данъчното събитие.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="tns:LegalEntity" name="from">
+                <xs:annotation>
+                    <xs:documentation>
+                        Информация за издателя на фактурата.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="tns:LegalEntity" name="for">
+                <xs:annotation>
+                    <xs:documentation>
+                        Информация за получателя на фактурата.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="currency">
+                <xs:annotation>
+                    <xs:documentation>
+                        Валутата, използвана във фактурата.
+                        Всички суми са в зададената валута.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="Summary">
+        <xs:annotation>
+            <xs:documentation>
+                Обобщение на сумата за плащане.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:all>
+            <xs:element type="xs:decimal" name="subtotal">
+                <xs:annotation>
+                    <xs:documentation>
+                        Данъчна основа.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="tns:Taxes" name="taxes" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Данъци и такси върху данъчната основа.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:decimal" name="total">
+                <xs:annotation>
+                    <xs:documentation>
+                        Сума за плащане.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="Charges">
+        <xs:annotation>
+            <xs:documentation>
+                Подробно описание на потреблението.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element type="tns:Services" name="services" />
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="LegalEntity">
+        <xs:all>
+            <xs:annotation>
+                <xs:documentation>
+                    Информация за физическо или юридическо лице.
+                </xs:documentation>
+            </xs:annotation>
+
+            <xs:element type="xs:string" name="id">
+                <xs:annotation>
+                    <xs:documentation>
+                        Идентификационен номер - ЕГН или ЕИК.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="vat_id" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Идентификационен номер по ЗДДС.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="name" />
+            <xs:element type="xs:string" name="address" />
+            <xs:element type="xs:string" name="city" />
+            <xs:element type="xs:string" name="country" />
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="Taxes">
+        <xs:sequence>
+            <xs:element type="tns:Tax" name="tax" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Tax">
+        <xs:annotation>
+            <xs:documentation>
+                Данък или такса, която се начислява върху данъчната основа.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:all>
+            <xs:element type="xs:string" name="name">
+                <xs:annotation>
+                    <xs:documentation>
+                        Наименование на данъка или таксата.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:decimal" name="rate" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Процентът начислен върху данъчната основа.
+                        Ако данъкът или таксата е фиксирана сума
+                        (или не се изчислява като процент)
+                        този елемент трябва да не се добавя.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:decimal" name="amount">
+                <xs:annotation>
+                    <xs:documentation>
+                        Сумата начислена върху данъчната основа.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="Services">
+        <xs:sequence>
+            <xs:element type="tns:Service" name="service" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Service">
+        <xs:all>
+            <xs:element type="xs:string" name="name">
+                <xs:annotation>
+                    <xs:documentation>
+                        Името на услугата.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="tns:Items" name="items">
+                <xs:annotation>
+                    <xs:documentation>
+                        Отделните елементи от услугата, който са таксувани.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:decimal" name="subtotal">
+                <xs:annotation>
+                    <xs:documentation>
+                        Общата сума начислена за потреблението на услугата.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="Items">
+        <xs:sequence>
+            <xs:element type="tns:Item" name="item" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Item">
+        <xs:annotation>
+            <xs:documentation>
+                Ред от фактурата.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element type="xs:string" name="description">
+                <xs:annotation>
+                    <xs:documentation>
+                        Кратко описание на елемента, който се таксува.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="unit" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Мерната единица, която се използва за измерване на потреблението.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:decimal" name="unit_price" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Единична цена.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:decimal" name="usage" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Потреблението, измерено в зададената мерна единица.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:decimal" name="amount">
+                <xs:annotation>
+                    <xs:documentation>
+                        Общата сума начислена за потреблението.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+</xs:schema>
